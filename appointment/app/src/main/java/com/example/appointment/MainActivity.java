@@ -3,10 +3,13 @@ package com.example.appointment;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Debug;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -38,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore mFirestore;
     private CollectionReference mItems;
 
+    private NotificationHelper mNotificationHelper;
+    private AlarmManager mAlarmManager;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
         preferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
 
         Log.i(LOG_TAG, "onCreate");
+
+        mNotificationHelper = new NotificationHelper(this);
+        mAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        setAlarmManager();
     }
 
     public void login(View view) {
@@ -103,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void register(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
+
+        mNotificationHelper.send("active");
+
         startActivity(intent);
     }
 
@@ -116,17 +132,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-
+        mAuth.signOut();
         Log.i(LOG_TAG, "onStop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        mAuth.signOut();
         Log.i(LOG_TAG, "onDestroy");
     }
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -136,6 +151,23 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
 
         Log.i(LOG_TAG, "onPause");
+    }
+
+    private void setAlarmManager() {
+        long repeatInterval = 60000; // AlarmManager.INTERVAL_FIFTEEN_MINUTES;
+        long triggerTime = SystemClock.elapsedRealtime() + repeatInterval;
+
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mAlarmManager.setInexactRepeating(
+                AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                triggerTime,
+                repeatInterval,
+                pendingIntent);
+
+
+        mAlarmManager.cancel(pendingIntent);
     }
 
     @Override
@@ -161,4 +193,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, DoctorActivity.class);
         startActivity(intent);
     }
+
+
 }

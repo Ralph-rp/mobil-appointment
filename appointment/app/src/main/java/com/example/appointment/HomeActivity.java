@@ -109,4 +109,18 @@ public class HomeActivity extends AppCompatActivity {
 
     public void bookAppointment(String id) {
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.signOut();
+        Log.i(LOG_TAG, "onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mAuth.signOut();
+        Log.i(LOG_TAG, "onDestroy");
+    }
 }

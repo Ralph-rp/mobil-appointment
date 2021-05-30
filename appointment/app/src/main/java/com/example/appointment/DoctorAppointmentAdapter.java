@@ -43,7 +43,7 @@ public class DoctorAppointmentAdapter extends RecyclerView.Adapter<DoctorAppoint
         holder.bindTo(currentItem);
 
         if(holder.getAdapterPosition() > lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.slide_in_row);
+            Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.animation2);
             holder.itemView.startAnimation(animation);
             lastPosition = holder.getAdapterPosition();
         }
