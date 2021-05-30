@@ -4,32 +4,36 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 /*
-Pácienseknek jelennek meg az appointmentek listában
-ezeket tudják lefoglalni/lemondani
+Doktornak jelenik meg 2 gomb: appointment létrehozása, saját appointmentek
+létrehozásnál egy form jelenik meg, ki lehet tölteni és feltölteni az új időpontot.
+saját időpontoknál kilistázódnak az orvoshoz tartozó időpontok, ezeken van egy szerkesztés
+és törlés gomb, a szerkesztésnél átdob egy formra (mint a létrehozás form) ahol be vannak töltve az
+adatok és szerkeszteni lehet őket.
  */
-public class HomeActivity extends AppCompatActivity {
-    private static final String LOG_TAG = HomeActivity.class.getName();
+
+public class DoctorActivity extends AppCompatActivity {
+    private static final String LOG_TAG = DoctorActivity.class.getName();
     private FirebaseUser user;
     private FirebaseAuth mAuth;
 
     private RecyclerView mRecyclerView;
     private ArrayList<Appointment> mItemList;
-    private AppointmentAdapter mAdapter;
+    private DoctorAppointmentAdapter mAdapter;
 
     private int gridNumber = 1;
 
@@ -39,7 +43,10 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_appointment);
+
+
+
+        setContentView(R.layout.activity_doctor);
         mAuth = FirebaseAuth.getInstance();
         // mAuth.signOut();
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -55,13 +62,12 @@ public class HomeActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, gridNumber));
         mItemList = new ArrayList<>();
 
-        mAdapter = new AppointmentAdapter(this, mItemList);
+        mAdapter = new DoctorAppointmentAdapter(this, mItemList);
         mRecyclerView.setAdapter(mAdapter);
 
         mFirestore = FirebaseFirestore.getInstance();
         mItems = mFirestore.collection("Appointments");
         queryData();
-
     }
 
     private void queryData() {
@@ -72,41 +78,48 @@ public class HomeActivity extends AppCompatActivity {
                 Appointment item = document.toObject(Appointment.class);
                 mItemList.add(item);
             }
-            if(mItemList.size() == 0) {
-                initializeData();
-                queryData();
-            }
             mAdapter.notifyDataSetChanged();
         });
     }
 
-    private void initializeData() {
-     //   String[] itemList;
-        String[] id = getResources().getStringArray(R.array.appointment_ids);;
-        String[] status = getResources().getStringArray(R.array.appointment_status);
-        String[] appointmentType  = getResources().getStringArray(R.array.appointment_type);
-        String[] description = getResources().getStringArray(R.array.appointment_description);
-        String[] start = getResources().getStringArray(R.array.appointment_start);
-        String[] end = getResources().getStringArray(R.array.appointment_end);
-        String[] date = getResources().getStringArray(R.array.appointment_date);
-        String[] slots = getResources().getStringArray(R.array.appointment_slots);
-        TypedArray actors = getResources().obtainTypedArray(R.array.appointment_actors);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        super.onCreateOptionsMenu(menu);
 
-      //  mItemList.clear();
+//        getMenuInflater().inflate(R.menu.doctor_appointment_menu, menu);
+//        MenuItem menuItem = menu.findItem(R.id.new_appointment);
 
-        for (int i = 0; i < id.length; i++) {
-            mItems.add(new Appointment(
-                    status[i], appointmentType[i],
-                    "no reason", description[i],
-                    start[i], end[i], date[i],
-                    Integer.parseInt(slots[i])));
-        }
 
-        //egyeb tagot hozzaadasa setterekkel
-
-       // mAdapter.notifyDataSetChanged();
+        return true;
     }
 
-    public void bookAppointment(String id) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.new_appointment:
+                return true;
+            case R.id.logout_button:
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+
+    public void editAppointment(String id) {
+        
+    }
+
+    public void deleteAppointment(String id) {
     }
 }

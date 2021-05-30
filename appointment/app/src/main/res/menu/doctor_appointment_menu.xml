@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+    android:id="@+id/new_appointment"
+    android:title="@string/new_appointment"
+    app:showAsAction="always"
+    app:actionViewClass="android.widget.Button"
+    />
+
+    <item
+        android:id="@+id/logout_button"
+        android:title="@string/logout"
+        app:showAsAction="never"
+        app:actionViewClass="android.widget.Button"
+        />
+</menu>

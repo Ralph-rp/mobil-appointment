@@ -17,14 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.ViewHolder> implements Filterable {
-    private static final String LOG_TAG = AppointmentAdapter.class.getName();
+public class DoctorAppointmentAdapter extends RecyclerView.Adapter<DoctorAppointmentAdapter.ViewHolder> implements Filterable {
+    private static final String LOG_TAG = DoctorAppointmentAdapter.class.getName();
     private ArrayList<Appointment> mAppointmentData;
     private ArrayList<Appointment> mAppointmentDataAll;
     private Context mContext;
     private int lastPosition = -1;
 
-    public AppointmentAdapter(Context context, ArrayList<Appointment> itemsData) {
+    public DoctorAppointmentAdapter(Context context, ArrayList<Appointment> itemsData) {
         this.mAppointmentData = itemsData;
         this.mAppointmentDataAll = itemsData;
         this.mContext = context;
@@ -32,12 +32,12 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false));
+    public DoctorAppointmentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new DoctorAppointmentAdapter.ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.doctor_list_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder( AppointmentAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder( DoctorAppointmentAdapter.ViewHolder holder, int position) {
         Appointment currentItem = mAppointmentData.get(position);
 
         holder.bindTo(currentItem);
@@ -108,10 +108,16 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             mEndTimeText = itemView.findViewById(R.id.endTimeTextView);
             mDateText = itemView.findViewById(R.id.appointmentDateTextView);
             mDescriptionText = itemView.findViewById(R.id.descriptionTextView);
-            itemView.findViewById(R.id.bookButton).setOnClickListener(new View.OnClickListener() {
+            itemView.findViewById(R.id.editButton).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((HomeActivity)mContext).bookAppointment(mAppointmentData.get(0).getId());
+                    ((DoctorActivity)mContext).editAppointment(mAppointmentData.get(0).getId());
+                }
+            });
+            itemView.findViewById(R.id.deleteButton).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((DoctorActivity)mContext).deleteAppointment(mAppointmentData.get(0).getId());
                 }
             });
 
@@ -119,7 +125,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
         public void bindTo(Appointment currentItem) {
             mTypeText.setText(currentItem.getAppointmentType());
-           // String slotsString = String.valueOf(currentItem.getSlots());
+            // String slotsString = String.valueOf(currentItem.getSlots());
             mSlotsAvailableNumberText.setText(String.valueOf(currentItem.getSlots()));
             mStartTimeText.setText(currentItem.getStart());
             mEndTimeText.setText(currentItem.getEnd());

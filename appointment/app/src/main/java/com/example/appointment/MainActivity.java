@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -15,18 +16,27 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getName();
     private static final String PREF_KEY = MainActivity.class.getPackage().toString();
-    private static final int SECRET_KEY = 99;
 
     EditText userNameET;
     EditText passwordET;
 
     private SharedPreferences preferences;
     private FirebaseAuth mAuth;
+
+    private FirebaseFirestore mFirestore;
+    private CollectionReference mItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +63,37 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Log.d(LOG_TAG, "Login done!");
-                    startHomeScreen();
+
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    ArrayList<Actor> mItemList = new ArrayList<>();
+
+                    mFirestore = FirebaseFirestore.getInstance();
+
+                    mFirestore.collection("Users")
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            Actor item = document.toObject(Actor.class);
+                                            if(item.getEmail().equals(user.getEmail())) {
+                                                Log.e(LOG_TAG,"asd "+item.getType());
+                                                if (item.getType().equals("Patient")) {
+                                                    startHomeScreen();
+                                                    finish();
+                                                } else {
+                                                    startDoctorHomeScreen();
+                                                    finish();
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        Log.d(LOG_TAG, "Error getting documents: ", task.getException());
+                                    }
+                                }
+                            });
+
                 } else {
                     Toast.makeText(MainActivity.this, "Invalid email or password!", Toast.LENGTH_LONG).show();
                 }
@@ -64,10 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void register(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
-        intent.putExtra("SECRET_KEY", SECRET_KEY);
         startActivity(intent);
-
-        // TODO.
     }
 
     @Override
@@ -121,4 +157,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void startDoctorHomeScreen() {
+        Intent intent = new Intent(this, DoctorActivity.class);
+        startActivity(intent);
+    }
 }

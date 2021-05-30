@@ -1,185 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".RegisterActivity">
 
         <TextView
-            android:id="@+id/registrationTextView"
+            android:id="@+id/newAppointmentTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin"
-            android:text="@string/register"
-            android:textSize="24sp"
+            android:text="@string/create_new_appointment"
+            android:textSize="22sp"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:textAlignment="center"
             />
 
         <EditText
-            android:id="@+id/emailEditText"
+            android:id="@+id/appointmentStatusEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin"
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginRight="@dimen/default_margin"
             android:ems="10"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
+            android:hint="@string/status"
+            android:inputType="text"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_below="@id/registrationTextView"
+            android:layout_below="@id/newAppointmentTextView"
             />
 
         <EditText
-            android:id="@+id/passwordEditText"
+            android:id="@+id/appointmentTypeEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin"
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginRight="@dimen/default_margin"
             android:ems="10"
-            android:hint="@string/password"
-            android:inputType="textPassword"
+            android:hint="@string/type"
+            android:inputType="text"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_below="@id/emailEditText"
+            android:layout_below="@id/appointmentStatusEditText"
             />
 
         <EditText
-            android:id="@+id/passwordAgainEditText"
+            android:id="@+id/appointmentDescriptionEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin"
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginRight="@dimen/default_margin"
             android:ems="10"
-            android:hint="@string/password_again"
-            android:inputType="textPassword"
+            android:hint="@string/description"
+            android:inputType="text"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_below="@id/passwordEditText"
+            android:layout_below="@id/appointmentTypeEditText"
             />
 
-        <EditText
-            android:id="@+id/nameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin"
-            android:ems="10"
-            android:hint="@string/name"
-            android:inputType="textPersonName"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@id/passwordAgainEditText"
-            />
-
-        <EditText
-            android:id="@+id/phoneNumberEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin"
-            android:ems="10"
-            android:hint="@string/phone_number"
-            android:inputType="phone"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@id/nameEditText"
-            />
-
-    <!--    <DatePicker-->
-    <!--        android:id="@+id/dp_datepicker"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:scaleX="0.7"-->
-    <!--        android:scaleY="0.7"-->
-    <!--        android:layout_marginLeft="-30dp"-->
-    <!--        android:layout_marginRight="-30dp"-->
-    <!--        android:datePickerMode="spinner"-->
-    <!--        />-->
         <TextView
+            android:id="@+id/startTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:textAlignment="center"
+            android:text="Start:"
+            android:layout_below="@id/appointmentDescriptionEditText"
+            />
+
+        <TimePicker
+            android:id="@+id/appointmentStart"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_below="@id/startTextView"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:ems="2"
+            android:inputType="time"
+            android:timePickerMode="spinner" />
+
+        <TextView
+            android:id="@+id/endTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:textAlignment="center"
+            android:text="End:"
+            android:layout_below="@id/appointmentStart"
+            />
+        <TimePicker
+            android:id="@+id/appointmentEnd"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_below="@id/endTextView"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:ems="2"
+            android:inputType="time"
+            android:timePickerMode="spinner" />
+
+        <TextView
+            android:id="@+id/appointmentDateTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin"
             android:textAlignment="center"
             android:text="@string/select_birth_date"
-            android:layout_below="@id/phoneNumberEditText"
+            android:layout_below="@id/appointmentEnd"
             />
         <DatePicker
             android:id="@+id/birthDateEditText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="140dp"
             android:layout_marginTop="@dimen/default_margin"
-            android:ems="10"
             android:inputType="date"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_below="@id/phoneNumberEditText"
+            android:layout_below="@id/appointmentDateTextView"
             android:calendarViewShown="false"
             android:datePickerMode="spinner"
             />
 
-        <Spinner
-            android:id="@+id/genderSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
+        <NumberPicker
+            android:id="@+id/availableSlotsNumber"
+            android:layout_width="201dp"
+            android:layout_height="90dp"
             android:layout_below="@id/birthDateEditText"
-            />
-
-        <Spinner
-            android:id="@+id/accountTypeSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_below="@id/genderSpinner"
-            />
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="100dp"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginEnd="100dp"
+            android:layout_marginRight="@dimen/default_margin"
+            android:ems="3"
+            android:inputType="numberDecimal" />
 
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_below="@id/accountTypeSpinner"
+            android:layout_below="@id/availableSlotsNumber"
             android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             >
             <Button
-                android:id="@+id/registerButton"
+                android:id="@+id/editButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/register"
-                android:onClick="register"
+                android:text="Edit"
+                android:onClick="Edit"
                 android:layout_marginTop="20dp"
-                 />
+                />
 
             <Button
-                android:id="@+id/loginButton"
+                android:id="@+id/deleteButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
-                android:text="@string/cancel"
-                android:onClick="cancel"
+                android:text="Delete"
+                android:onClick="Delete"
                 android:layout_marginTop="20dp"
-                 />
+                />
 
 
         </LinearLayout>

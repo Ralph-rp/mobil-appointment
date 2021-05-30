@@ -8,4 +8,99 @@
     <string name="username">Username</string>
     <string name="password_again">Jelszó újra</string>
     <string name="cancel">Mégse</string>
+    <string name="phone_number">Phone number</string>
+    <string name="select_birth_date">Select birth date</string>
+    <string name="slots_available">Slots available: </string>
+    <string name="book">Foglalás</string>
+    <string name="own_appointments">Own appointments</string>
+    <string name="logout">Logout</string>
+    <string name="new_appointment">New appointment</string>
+    <string name="create_new_appointment">Create new appointment</string>
+    <string name="status">Status</string>
+    <string name="type">Type</string>
+    <string name="description">Description</string>
+    <string name="create">Create</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string-array name="genders">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="accountTypes">
+        <item>Patient</item>
+        <item>Doctor</item>
+    </string-array>
+
+    <string-array name="appointment_ids">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <string-array name="appointment_status">
+        <item>Available</item>
+        <item>Available</item>
+        <item>Unavailable</item>
+        <item>Unavailable</item>
+    </string-array>
+
+    <string-array name="appointment_type">
+        <item>Check up</item>
+        <item>Operation</item>
+        <item>Check up</item>
+        <item>Operation</item>
+    </string-array>
+
+    <string-array name="appointment_description">
+        <item>Regular heck up</item>
+        <item>Breast implants</item>
+        <item>Regular Check up</item>
+        <item>Routine stuff</item>
+    </string-array>
+
+    <string-array name="appointment_start">
+        <item>11:00</item>
+        <item>12:00</item>
+        <item>13:00</item>
+        <item>14:00</item>
+    </string-array>
+
+    <string-array name="appointment_end">
+        <item>15:00</item>
+        <item>16:00</item>
+        <item>17:00</item>
+        <item>18:00</item>
+    </string-array>
+
+    <string-array name="appointment_date">
+        <item>02.05.2021</item>
+        <item>03.04.2022</item>
+        <item>06.04.2022</item>
+        <item>07.04.2021</item>
+    </string-array>
+
+    <string-array name="appointment_slots">
+        <item>1</item>
+        <item>2</item>
+        <item>2</item>
+        <item>1</item>
+    </string-array>
+
+    <array name="appointment_actors">
+        <!--        <actors>-->
+        <!--            <actor>Patient</actor>-->
+        <!--            <actor>Doctor</actor>-->
+        <!--        </actors>-->
+        <!--        <actors>-->
+        <!--            <actor>Patient</actor>-->
+        <!--            <actor>Doctor</actor>-->
+        <!--        </actors>-->
+        <!--        <actors>-->
+        <!--            <actor>Patient</actor>-->
+        <!--            <actor>Doctor</actor>-->
+        <!--        </actors>-->
+    </array>
+
 </resources>
